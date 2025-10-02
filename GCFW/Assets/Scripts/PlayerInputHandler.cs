@@ -9,6 +9,7 @@ public class PlayerInputHandler : MonoBehaviour
     public bool IsJumpPressed { get; private set; } = false;
     public bool IsSprintPressed { get; private set; } = false;
     public bool IsCrouchPressed { get; private set; } = false;
+    public bool IsInteractPressed { get; private set; } = false;
     private void Awake()
     {
         controls = new PlayerControls();
@@ -26,6 +27,8 @@ public class PlayerInputHandler : MonoBehaviour
         controls.Player.Sprint.canceled += OnSprintCanceled;
         controls.Player.Crouch.performed += OnCrouchPerformed;
         controls.Player.Crouch.canceled += OnCrouchCanceled;
+        controls.Player.Interact.performed += OnInteractPerformed;
+        //controls.Player.Interact.canceled += OnInteractCanceled;
 
         controls.Player.Enable();
         controls.UI.Enable();
@@ -42,6 +45,8 @@ public class PlayerInputHandler : MonoBehaviour
         controls.Player.Sprint.canceled -= OnSprintCanceled;
         controls.Player.Crouch.performed -= OnCrouchPerformed;
         controls.Player.Crouch.canceled -= OnCrouchCanceled;
+        controls.Player.Interact.performed -= OnInteractPerformed;
+        //controls.Player.Interact.performed -= OnInteractCanceled;
 
         controls.Player.Disable();
         controls.UI.Disable();
@@ -86,6 +91,14 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnCrouchCanceled(InputAction.CallbackContext context)
     {
         IsCrouchPressed = false;
+    }
+    private void OnInteractPerformed(InputAction.CallbackContext context)
+    {
+        IsInteractPressed = true;
+    }
+    private void OnInteractCanceled(InputAction.CallbackContext context)
+    {
+        IsInteractPressed = false;
     }
     private void OnDestroy()
     {
